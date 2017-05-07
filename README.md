@@ -1,23 +1,24 @@
 # Aliasfilter for Mail
 
-## Overview
+## Introduction and Overview
 
-This concept assumes a qmail environment as provided by uberspace.de for example.
+This concept assumes a qmail environment as provided by [uberspace.de](https://uberspace.de) for example (additional information can be found at the [uberspace wiki solutions page](https://wiki.uberspace.de/cool) and [specifically here](https://wiki.uberspace.de/cool:qmail-aliasfilter)).
 
-### Uberspace-specific:
+
+### Uberspace-specific
 * Add a domain (e.g. `domain.com`) with namespace, e.g. `namespace`
 * Add a qmail file, e.g. `.qmail-namespace-nospam-default`
-  * This results in `nospam-\*@domain.com` to be processed by the qmail file.
+  * This results in `nospam-*@domain.com` to be processed by the qmail file.
   * `nospam` is an example for a prefix. Suffixes are not possible.
 
 Other options include
 * No prefix
   * e.g. `.qmail-namespace-default`
-  * This results in `\*domain.com` to be processed. 
+  * This results in `*domain.com` to be processed. 
   * This is not recommended because spammers frequently use collected names as a user part of the address.
 * No namespace (at uberspace, all domains will match)
   * e.g. `.qmail-nospam-default`
-  * This results in `nospam-\*@\*` to be processed.
+  * This results in `nospam-*@*` to be processed.
 
 
 ## Qmail File
@@ -29,7 +30,7 @@ Note that the mail will not be delivered if the maildrop command doesn't succeed
  
 ## Mailfilter File
 e.g. `.mailfilter`
-Note: The file must have 600 rights, otherwise maildrop doesn't process the file.
+Note: The file requires the rights set to 600, otherwise maildrop doesn't process the file.
 
     $ chmod 600 .mailfilter
     
@@ -92,4 +93,9 @@ The mailfilter file.
 The `aliasfilter.py` needs to be executable, e.g. 700.
 
     $ chmod 700 aliasfilter.py
+    
+Note: The file can be tested with the following command. The `testmail` file is a text file containing headers and body as described in [RFC 2822](https://tools.ietf.org/html/rfc2822).
+
+    $ .aliasfilter.py < testmail
+    
 
